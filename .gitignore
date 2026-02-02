@@ -4,3 +4,7 @@ node_modules/
 dist/
 logs/
 .DS_Store
+frontend/
+auth/
+infra/
+scripts/ (si tu veux pas)
