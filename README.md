@@ -78,6 +78,9 @@ Domain-specific rules and presets are intentionally excluded.
 docker-compose up --build
 The API will be available at:
 http://localhost:3000
+```
+
+# Keeping current state as of February 2, 2026
 
 
 

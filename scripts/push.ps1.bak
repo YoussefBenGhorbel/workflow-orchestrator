@@ -1,0 +1,68 @@
+# scriptspush.ps1
+# Usage powershell -ExecutionPolicy Bypass -File .scriptspush.ps1
+
+$ErrorActionPreference = Stop
+
+$repoUrl = httpsgithub.comYoussefBenGhorbelworkflow-orchestrator.git
+
+Write-Host == workflow-orchestrator push script ==
+
+# Safety refuse to add node_modules or .env
+$pathsToRemove = @(
+  node_modules,
+  backendnode_modules,
+  frontendnode_modules,
+  frontendfrontendnode_modules,
+  .env,
+  backend.env,
+  frontend.env
+)
+
+foreach ($p in $pathsToRemove) {
+  if (Test-Path $p) {
+    Write-Host Removing $p
+    Remove-Item -Recurse -Force $p
+  }
+}
+
+# init git if needed
+if (-not (Test-Path .git)) {
+  git init  Out-Null
+  git branch -M main
+}
+
+# ensure remote exists
+$remote = git remote 2$null
+if ($remote -notmatch origin) {
+  git remote add origin $repoUrl
+} else {
+  git remote set-url origin $repoUrl
+}
+
+# basic .gitignore if missing
+if (-not (Test-Path .gitignore)) {
+@
+node_modules
+node_modules
+.env
+.env.
+.DS_Store
+dist
+build
+coverage
+@  Out-File -Encoding utf8 .gitignore
+}
+
+git add -A
+git status
+
+$msg = Read-Host Commit message
+if ([string]IsNullOrWhiteSpace($msg)) { $msg = Initial public structure }
+
+git commit -m $msg 2$null
+if ($LASTEXITCODE -ne 0) {
+  Write-Host No changes to commit (or first commit already done).
+}
+
+git push -u origin main
+Write-Host Done.
