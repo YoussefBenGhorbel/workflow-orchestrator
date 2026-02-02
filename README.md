@@ -75,10 +75,12 @@ Domain-specific rules and presets are intentionally excluded.
 
 ### Run locally
 ```bash
-docker-compose up --build
-The API will be available at:
-http://localhost:3000
-```
+# Health check (example)
+curl -s http://localhost:3000/health
+
+# List tasks (example)
+curl -s http://localhost:3000/tasks
+
 
 
 
